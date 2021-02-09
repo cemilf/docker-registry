@@ -1,0 +1,29 @@
+version: "3.9"
+
+networks:
+  docker-registry-network:
+    name: docker-registry-network
+    driver: overlay
+
+volumes:
+  nextcloud:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /var/docker/registry
+
+services:
+  docker-registry:
+    image: registry:2
+    container_name: docker-registry
+    ports: 
+      - "5000:5000"
+    restart: always
+    volumes:
+      - docker-registry:/var/lib/registry
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20mb"
+        max-file: "10"
