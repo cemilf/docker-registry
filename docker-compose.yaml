@@ -1,12 +1,12 @@
 version: "3.5"
 
 networks:
-  docker-registry-network:
+  docker-registry:
     name: docker-registry-network
     driver: overlay
 
 volumes:
-  nextcloud:
+  docker-registry:
     driver: local
     driver_opts:
       o: bind
@@ -24,6 +24,8 @@ services:
     ports: 
       - "5000:5000"
     restart: always
+    networks: 
+      - docker-registry
     volumes:
       - docker-registry:/var/lib/registry
     logging:
